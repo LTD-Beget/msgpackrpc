@@ -1,5 +1,5 @@
 {
-    "name": "LTD-Beget/msgpackrpc",
+    "name": "ltd-beget/msgpackrpc",
     "description": "Port of PEAR MessagePack RPC Client to PHP 5.3+",
     "minimum-stability": "stable",
     "authors": [
