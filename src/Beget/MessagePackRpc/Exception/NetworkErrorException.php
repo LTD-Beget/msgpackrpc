@@ -11,7 +11,7 @@
  *
  */
 
-namespace Epkm\MessagePackRpc\Exception;
+namespace Beget\MessagePackRpc\Exception;
 
 
 class NetworkErrorException extends \RuntimeException implements ExceptionInterface {

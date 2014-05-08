@@ -11,10 +11,8 @@
  *
  */
 
-namespace EpkmTest\MessagePackRpc;
+namespace Beget\MessagePackRpc;
 
-use Epkm\MessagePackRpc\Client;
-use Epkm\MessagePackRpc\Exception\RequestErrorException;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -31,7 +29,7 @@ class ClientTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->client = new Client('127.0.0.1', 1985);
+        $this->client = new Client('127.0.0.1', 30001);
     }
 
     public function tearDown()
@@ -50,8 +48,18 @@ class ClientTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(5, $result);
     }
 
+
+    public function testLargeData()
+    {
+        $size   = 100000;
+
+        $result = $this->client->call('largeDataTest', array($size));
+
+        $this->assertEquals($size + 1, count($result));
+    }
+
     /**
-     * @expectedException \Epkm\MessagePackRpc\Exception\RequestErrorException
+     * @expectedException \Beget\MessagePackRpc\Exception\RequestErrorException
      */
     public function testCallFail()
     {

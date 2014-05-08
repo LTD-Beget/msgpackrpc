@@ -11,11 +11,11 @@
  *
  */
 
-namespace Epkm\MessagePackRpc;
+namespace Beget\MessagePackRpc;
 
 
-use Epkm\MessagePackRpc\Exception\NetworkErrorException;
-use Epkm\MessagePackRpc\Exception\ProtocolErrorException;
+use Beget\MessagePackRpc\Exception\NetworkErrorException;
+use Beget\MessagePackRpc\Exception\ProtocolErrorException;
 use Zend\Serializer\Adapter\MsgPack;
 use Zend\Stdlib\ErrorHandler;
 
@@ -91,7 +91,6 @@ class Back {
      */
     public function clientConnection($host, $port, $call)
     {
-        $size = $this->size;
         $send = $this->serializer->serialize($call);
         $sock = $this->connect($host, $port);
 
@@ -108,11 +107,23 @@ class Back {
         }
 
         ErrorHandler::start();
-        $read = fread($sock, $size);
-        $error = ErrorHandler::stop();
+        stream_set_blocking($sock, 0);
 
-        if ($read === false) {
-            throw new NetworkErrorException("Cannot read from socket", 0, $error);
+        $buff = "";
+
+        while (!feof($sock)) {
+            $r = array($sock);
+            $n = null;
+
+            stream_select($r, $n, $n, null);
+
+            $read = fread($sock, $this->size);
+
+            if ($read === false) {
+                throw new NetworkErrorException("Cannot read from socket", 0, $error);
+            }
+
+            $buff .= $read;
         }
 
         if (!$this->reuseConnection) {
@@ -121,7 +132,7 @@ class Back {
             ErrorHandler::stop();
         }
 
-        return $read;
+        return $buff;
     }
 
     /**

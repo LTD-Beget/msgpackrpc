@@ -11,9 +11,9 @@
  *
  */
 
-namespace Epkm\MessagePackRpc;
+namespace Beget\MessagePackRpc;
 
-use Epkm\MessagePackRpc\Exception\RequestErrorException;
+use Beget\MessagePackRpc\Exception\RequestErrorException;
 
 /**
  * Class Client

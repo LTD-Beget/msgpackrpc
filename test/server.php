@@ -14,7 +14,7 @@
 // Please run client.php
 
 /** @var Composer\Autoload\ClassLoader $loader */
-include __DIR__ . '/../vendor/autoload.php';
+include_once __DIR__ . '/../vendor/autoload.php';
 
 class App
 {
@@ -32,6 +32,21 @@ class App
     {
         throw new Exception('hoge');
     }
+
+    public function largeDataTest($size)
+    {
+        $a = array();
+
+        foreach(range(0, $size) as $i) {
+            $a[] = [
+                "test" => $i,
+                $i + 10,
+                $i => $size + 10
+            ];
+        }
+
+        return $a;
+    }
 }
 
 function testIs($no, $a, $b)
@@ -44,7 +59,7 @@ function testIs($no, $a, $b)
 }
 
 try {
-    $server = new \Epkm\MessagePackRpc\Server('1985', new App());
+    $server = new \Beget\MessagePackRpc\Server('30001', new App());
     $server->recv();
 } catch (Exception $e) {
     echo $e->getMessage() . "\n";

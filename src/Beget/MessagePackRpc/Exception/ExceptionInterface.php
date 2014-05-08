@@ -11,7 +11,7 @@
  *
  */
 
-namespace Epkm\MessagePackRpc\Exception;
+namespace Beget\MessagePackRpc\Exception;
 
 /**
  * Interface ExceptionInterface

@@ -11,9 +11,9 @@
  *
  */
 
-namespace Epkm\MessagePackRpc;
+namespace Beget\MessagePackRpc;
 
-use Epkm\MessagePackRpc\Exception\NetworkErrorException;
+use Beget\MessagePackRpc\Exception\NetworkErrorException;
 use Zend\Stdlib\ErrorHandler;
 
 /**
