@@ -1,18 +1,22 @@
 {
-    "name": "epokmedia/msgpackrpc",
+    "name": "ltd-beget/msgpackrpc",
     "description": "Port of PEAR MessagePack RPC Client to PHP 5.3+",
     "minimum-stability": "stable",
     "authors": [
         {
             "name": "EPOKMEDIA",
             "email": "info@epokmedia.fr"
+        },
+        {
+            "name": "vladqa",
+            "email": "vkolesnikov@beget.ru"
         }
     ],
     "keywords": ["rpc", "msgpack", "messagepack"],
     "license": "MIT",
     "autoload": {
         "psr-0": {
-            "Epkm\\MessagePackRpc": "src"
+            "Beget\\MessagePackRpc": "src"
         }
     },
     "require": {
