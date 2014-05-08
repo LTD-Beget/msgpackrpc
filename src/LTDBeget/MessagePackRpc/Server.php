@@ -11,9 +11,9 @@
  *
  */
 
-namespace Beget\MessagePackRpc;
+namespace LTDBeget\MessagePackRpc;
 
-use Beget\MessagePackRpc\Exception\NetworkErrorException;
+use LTDBeget\MessagePackRpc\Exception\NetworkErrorException;
 use Zend\Stdlib\ErrorHandler;
 
 /**

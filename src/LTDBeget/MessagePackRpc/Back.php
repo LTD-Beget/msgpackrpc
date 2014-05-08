@@ -11,11 +11,11 @@
  *
  */
 
-namespace Beget\MessagePackRpc;
+namespace LTDBeget\MessagePackRpc;
 
 
-use Beget\MessagePackRpc\Exception\NetworkErrorException;
-use Beget\MessagePackRpc\Exception\ProtocolErrorException;
+use LTDBeget\MessagePackRpc\Exception\NetworkErrorException;
+use LTDBeget\MessagePackRpc\Exception\ProtocolErrorException;
 use Zend\Serializer\Adapter\MsgPack;
 use Zend\Stdlib\ErrorHandler;
 

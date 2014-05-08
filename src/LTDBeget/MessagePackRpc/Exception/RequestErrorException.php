@@ -11,7 +11,7 @@
  *
  */
 
-namespace Beget\MessagePackRpc\Exception;
+namespace LTDBeget\MessagePackRpc\Exception;
 
 /**
  * Class RequestErrorException

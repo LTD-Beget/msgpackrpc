@@ -11,13 +11,9 @@
  *
  */
 
-namespace Beget\MessagePackRpc\Exception;
+namespace LTDBeget\MessagePackRpc\Exception;
 
-/**
- * Class ProtocolErrorException
- *
- * @package Epkm\MessagePackRpc\Exception
- */
-class ProtocolErrorException extends NetworkErrorException implements ExceptionInterface {
+
+class NetworkErrorException extends \RuntimeException implements ExceptionInterface {
 
 }

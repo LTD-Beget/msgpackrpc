@@ -11,7 +11,7 @@
  *
  */
 
-namespace Beget\MessagePackRpc;
+namespace LTDBeget\MessagePackRpc;
 
 use PHPUnit_Framework_TestCase;
 
@@ -59,7 +59,7 @@ class ClientTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException \Beget\MessagePackRpc\Exception\RequestErrorException
+     * @expectedException \LTDBeget\MessagePackRpc\Exception\RequestErrorException
      */
     public function testCallFail()
     {

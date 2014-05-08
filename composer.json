@@ -16,7 +16,7 @@
     "license": "MIT",
     "autoload": {
         "psr-0": {
-            "Beget\\MessagePackRpc": "src"
+            "LTDBeget\\MessagePackRpc": "src"
         }
     },
     "require": {

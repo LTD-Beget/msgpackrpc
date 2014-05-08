@@ -11,7 +11,7 @@
  *
  */
 
-namespace Beget\MessagePackRpc;
+namespace LTDBeget\MessagePackRpc;
 
 /**
  * Class Future
