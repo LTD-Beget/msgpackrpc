@@ -42,6 +42,11 @@ class Back {
     public $reuseConnection = true;
 
     /**
+     * @var \MessagePackUnpacker
+     */
+    protected $unpacker;
+
+    /**
      * @param int   $size
      * @param array $opts
      */
@@ -49,6 +54,7 @@ class Back {
     {
         $this->size = $size;
         $this->serializer = new MsgPack();
+        $this->unpacker = new \MessagePackUnpacker();
 
         if (array_key_exists('reuse_connection', $opts)) {
             $this->reuseConnection = $opts['reuse_connection'];
@@ -109,7 +115,7 @@ class Back {
         ErrorHandler::start();
         stream_set_blocking($sock, 0);
 
-        $buff = "";
+        $result = "";
 
         while (!feof($sock)) {
             $r = array($sock);
@@ -123,7 +129,12 @@ class Back {
                 throw new NetworkErrorException("Cannot read from socket", 0, $error);
             }
 
-            $buff .= $read;
+            $this->unpacker->feed($read);
+
+            if($this->unpacker->execute()) {
+                $result = $this->unpacker->data();
+                break;
+            }
         }
 
         if (!$this->reuseConnection) {
@@ -132,7 +143,7 @@ class Back {
             ErrorHandler::stop();
         }
 
-        return $buff;
+        return $result;
     }
 
     /**
@@ -173,15 +184,13 @@ class Back {
     }
 
     /**
-     * @param $recv
+     * @param $data
      *
      * @return Future
      * @throws Exception\ProtocolErrorException
      */
-    public function clientRecvObject($recv)
+    public function clientRecvObject($data)
     {
-        $data = $this->serializer->unserialize($recv);
-
         $type = $data[0];
         $code = $data[1];
         $errs = $data[2];
