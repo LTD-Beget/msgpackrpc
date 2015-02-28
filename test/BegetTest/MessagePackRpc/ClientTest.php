@@ -29,7 +29,7 @@ class ClientTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->client = new Client('127.0.0.1', 30001);
+        $this->client = new Client('127.0.0.1', 30002);
     }
 
     public function tearDown()

@@ -59,7 +59,7 @@ function testIs($no, $a, $b)
 }
 
 try {
-    $server = new \LTDBeget\MessagePackRpc\Server('30001', new App());
+    $server = new \LTDBeget\MessagePackRpc\Server('30002', new App());
     $server->recv();
 } catch (Exception $e) {
     echo $e->getMessage() . "\n";

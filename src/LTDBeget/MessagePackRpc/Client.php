@@ -38,9 +38,15 @@ class Client {
     protected $port = null;
 
     /**
+     * @var float|null
+     */
+    protected $socketTimeout = null;
+
+
+    /**
      * @param string    $host
      * @param int       $port
-     * @param Back\null $back
+     * @param Back|null $back
      */
     public function __construct($host, $port, $back = null)
     {
@@ -62,7 +68,7 @@ class Client {
         $port    = $this->port;
         $code    = 0;
         $call    = $this->back->clientCallObject($code, $func, $args);
-        $send    = $this->back->clientConnection($host, $port, $call);
+        $send    = $this->back->clientConnection($host, $port, $call, $this->socketTimeout);
 
         $future = $this->back->clientRecvObject($send);
 
@@ -96,5 +102,14 @@ class Client {
     public function call($func, $args)
     {
         return $this->send($func, $args);
+    }
+
+
+    /**
+     * @param float $timeout
+     */
+    public function setSocketTimeout($timeout)
+    {
+        $this->socketTimeout = (float)$timeout;
     }
 }

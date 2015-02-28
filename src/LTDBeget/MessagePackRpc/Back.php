@@ -50,7 +50,7 @@ class Back {
      * @param int   $size
      * @param array $opts
      */
-    public function __construct($size = 1024, $opts = array())
+    public function __construct($size = 1024, $opts = [])
     {
         $this->size = $size;
         $this->serializer = new MsgPack();
@@ -78,7 +78,7 @@ class Back {
      */
     public function clientCallObject($code, $func, $args)
     {
-        $data    = array();
+        $data    = [];
         $data[0] = 0;
         $data[1] = $code;
         $data[2] = $func;
@@ -92,13 +92,15 @@ class Back {
      * @param $port
      * @param $call
      *
+     * @param float $socketTimeout
+     *
      * @return string
-     * @throws Exception\NetworkErrorException
+     * @throws mixed
      */
-    public function clientConnection($host, $port, $call)
+    public function clientConnection($host, $port, $call, $socketTimeout)
     {
         $send = $this->serializer->serialize($call);
-        $sock = $this->connect($host, $port);
+        $sock = $this->connect($host, $port, $socketTimeout);
 
         if ($sock === false) {
             throw new NetworkErrorException("Cannot open socket");
@@ -118,7 +120,7 @@ class Back {
         $result = "";
 
         while (!feof($sock)) {
-            $r = array($sock);
+            $r = [$sock];
             $n = null;
 
             stream_select($r, $n, $n, null);
@@ -146,17 +148,26 @@ class Back {
         return $result;
     }
 
+
     /**
      * @param $host
      * @param $port
      *
+     * @param $socketTimeout
+     *
      * @return null|resource
+     * @throws mixed
      */
-    public function connect($host, $port) {
+    public function connect($host, $port, $socketTimeout = null) {
+
+        $socketTimeout = $socketTimeout === null ? null : (float)$socketTimeout;
+
+        $errorNumber = null;
+        $errorStr    = null;
 
         if (!$this->reuseConnection) {
             ErrorHandler::start();
-            $sock = fsockopen($host, $port);
+            $sock = fsockopen($host, $port, $errorNumber, $errorStr, $socketTimeout);
             ErrorHandler::stop();
 
             return $sock;
@@ -170,11 +181,11 @@ class Back {
 
         if (!$sock) {
             ErrorHandler::start();
-            $sock = fsockopen($host, $port);
+            $sock = fsockopen($host, $port, $errorNumber, $errorStr, $socketTimeout);
             ErrorHandler::stop();
         } else if (feof($sock)) {
             ErrorHandler::start();
-            $sock = fsockopen($host, $port);
+            $sock = fsockopen($host, $port, $errorNumber, $errorStr, $socketTimeout);
             ErrorHandler::stop();
         }
 
@@ -216,7 +227,7 @@ class Back {
      */
     public function serverSendObject($code, $sets, $errs)
     {
-        $data    = array();
+        $data    = [];
         $data[0] = 1;
         $data[1] = $code;
         $data[2] = $errs;
@@ -250,7 +261,7 @@ class Back {
             throw new ProtocolErrorException("Invalid message type for request: {$type}");
         }
 
-        return array($code, $func, $args);
+        return [$code, $func, $args];
     }
 
     /**
