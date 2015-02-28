@@ -110,6 +110,6 @@ class Client {
      */
     public function setSocketTimeout($timeout)
     {
-        $this->socketTimeout = (float)$timeout;
+        $this->socketTimeout = $timeout;
     }
 }

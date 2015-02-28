@@ -160,7 +160,7 @@ class Back {
      */
     public function connect($host, $port, $socketTimeout = null) {
 
-        $socketTimeout = $socketTimeout === null ? null : (float)$socketTimeout;
+        $socketTimeout = $socketTimeout === null ? ini_get("default_socket_timeout") : (float)$socketTimeout;
 
         $errorNumber = null;
         $errorStr    = null;
