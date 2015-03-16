@@ -55,7 +55,7 @@ class ClientTest extends PHPUnit_Framework_TestCase {
     public function testTimeout()
     {
         $this->client->setSocketTimeout(10);
-        $this->client->call('timeoutTest', array(2));
+        $this->client->call('timeoutTest', array());
     }
 
     public function testLargeData()
