@@ -16,6 +16,7 @@ namespace LTDBeget\MessagePackRpc;
 
 use LTDBeget\MessagePackRpc\Exception\NetworkErrorException;
 use LTDBeget\MessagePackRpc\Exception\ProtocolErrorException;
+use LTDBeget\MessagePackRpc\Exception\TimeoutException;
 use Zend\Serializer\Adapter\MsgPack;
 use Zend\Stdlib\ErrorHandler;
 
@@ -123,7 +124,10 @@ class Back {
             $r = [$sock];
             $n = null;
 
-            stream_select($r, $n, $n, null);
+            $return_code = stream_select($r, $n, $n, $socketTimeout);
+            if ($return_code === 0) {
+                throw new TimeoutException('Timeout exceeded when read from socket');
+            }
 
             $read = fread($sock, $this->size);
 

@@ -14,6 +14,7 @@
 namespace LTDBeget\MessagePackRpc;
 
 use PHPUnit_Framework_TestCase;
+use LTDBeget\MessagePackRpc\Exception\TimeoutException;
 
 /**
  * Class ClientTest
@@ -48,6 +49,14 @@ class ClientTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(5, $result);
     }
 
+    /**
+     * @expectedException \LTDBeget\MessagePackRpc\Exception\TimeoutException
+     */
+    public function testTimeout()
+    {
+        $this->client->setSocketTimeout(10);
+        $this->client->call('timeoutTest', array(2));
+    }
 
     public function testLargeData()
     {
