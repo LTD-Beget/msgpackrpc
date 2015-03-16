@@ -28,6 +28,13 @@ class App
         return $a + 2;
     }
 
+    public function timeoutTest()
+    {
+        sleep(15);
+
+        return true;
+    }
+
     public function fail()
     {
         throw new Exception('hoge');
