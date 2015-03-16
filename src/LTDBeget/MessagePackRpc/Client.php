@@ -42,6 +42,11 @@ class Client {
      */
     protected $socketTimeout = null;
 
+    /**
+     * @var int|null
+     */
+    protected $socketReadTimeout = null;
+
 
     /**
      * @param string    $host
@@ -68,7 +73,7 @@ class Client {
         $port    = $this->port;
         $code    = 0;
         $call    = $this->back->clientCallObject($code, $func, $args);
-        $send    = $this->back->clientConnection($host, $port, $call, $this->socketTimeout);
+        $send    = $this->back->clientConnection($host, $port, $call, $this->socketTimeout, $this->socketReadTimeout);
 
         $future = $this->back->clientRecvObject($send);
 
@@ -111,5 +116,14 @@ class Client {
     public function setSocketTimeout($timeout)
     {
         $this->socketTimeout = $timeout;
+    }
+
+
+    /**
+     * @param int|null $timeout
+     */
+    public function setSocketReadTimeout($timeout)
+    {
+        $this->socketReadTimeout = $timeout;
     }
 }

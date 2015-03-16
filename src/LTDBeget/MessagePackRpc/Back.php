@@ -93,12 +93,14 @@ class Back {
      * @param $port
      * @param $call
      *
-     * @param float $socketTimeout
+     * @param float    $socketTimeout
+     * @param int|null $socketReadTimeout
      *
      * @return string
-     * @throws mixed
+     * @throws Exception\NetworkErrorException
+     * @throws Exception\TimeoutException
      */
-    public function clientConnection($host, $port, $call, $socketTimeout)
+    public function clientConnection($host, $port, $call, $socketTimeout, $socketReadTimeout = null)
     {
         $send = $this->serializer->serialize($call);
         $sock = $this->connect($host, $port, $socketTimeout);
@@ -124,7 +126,7 @@ class Back {
             $r = [$sock];
             $n = null;
 
-            $return_code = stream_select($r, $n, $n, $socketTimeout);
+            $return_code = stream_select($r, $n, $n, $socketReadTimeout);
             if ($return_code === 0) {
                 throw new TimeoutException('Timeout exceeded when read from socket');
             }
