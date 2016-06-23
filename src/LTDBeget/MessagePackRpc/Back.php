@@ -74,19 +74,22 @@ class Back {
      * @param $code
      * @param $func
      * @param $args
+     * @param $meta
      *
      * @return array
      */
-    public function clientCallObject($code, $func, $args)
+    public function clientCallObject($code, $func, $args, $meta = null)
     {
         $data    = [];
         $data[0] = 0;
         $data[1] = $code;
         $data[2] = $func;
         $data[3] = $args;
+        $data[4] = $meta;
 
         return $data;
     }
+
 
     /**
      * @param $host
